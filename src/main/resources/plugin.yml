@@ -1,4 +1,4 @@
 name: TriHunt
-main: Main
+main: net.trilleo.mc.plugins.trihunt.Main
 version: 0.1.0
 api-version: 1.21

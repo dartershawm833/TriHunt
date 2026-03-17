@@ -1,3 +1,5 @@
+package net.trilleo.mc.plugins.trihunt
+
 import org.bukkit.plugin.java.JavaPlugin
 
 class Main : JavaPlugin() {
