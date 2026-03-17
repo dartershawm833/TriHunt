@@ -9,24 +9,44 @@ import org.bukkit.command.CommandSender
  * `net.trilleo.mc.plugins.trihunt.commands` package (or any subpackage) to
  * have it automatically discovered and registered at startup.
  *
+ * By default every command is registered as a **sub-command** of `/trihunt`
+ * (alias `/th`). For example, a command with `name = "reload"` becomes
+ * `/trihunt reload`. Set [isMainCommand] to `true` to register the command
+ * as a standalone top-level command instead.
+ *
  * The class must have either:
  * - A no-arg constructor, **or**
  * - A constructor that accepts a single `JavaPlugin` parameter (the plugin
  *   instance will be injected automatically).
  *
- * Example:
+ * Example (sub-command – registered as `/trihunt start`):
  * ```kotlin
  * package net.trilleo.mc.plugins.trihunt.commands.game
  *
  * class StartCommand : PluginCommand(
  *     name = "start",
  *     description = "Start the manhunt",
- *     usage = "/start",
- *     aliases = listOf("begin"),
+ *     usage = "/trihunt start",
  *     permission = "trihunt.start"
  * ) {
  *     override fun execute(sender: CommandSender, args: Array<out String>): Boolean {
  *         sender.sendMessage("The hunt has begun!")
+ *         return true
+ *     }
+ * }
+ * ```
+ *
+ * Example (main command – registered as `/globaltool`):
+ * ```kotlin
+ * package net.trilleo.mc.plugins.trihunt.commands
+ *
+ * class GlobalToolCommand : PluginCommand(
+ *     name = "globaltool",
+ *     description = "A standalone command",
+ *     isMainCommand = true
+ * ) {
+ *     override fun execute(sender: CommandSender, args: Array<out String>): Boolean {
+ *         sender.sendMessage("Hello from /globaltool!")
  *         return true
  *     }
  * }
@@ -37,7 +57,8 @@ abstract class PluginCommand(
     val description: String = "",
     val usage: String = "/<command>",
     val aliases: List<String> = emptyList(),
-    val permission: String? = null
+    val permission: String? = null,
+    val isMainCommand: Boolean = false
 ) {
 
     /**
