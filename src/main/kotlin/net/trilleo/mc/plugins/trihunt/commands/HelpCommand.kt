@@ -11,6 +11,11 @@ class HelpCommand : PluginCommand(
     name = "help",
     description = "Show all available commands"
 ) {
+    companion object {
+        // Matches the total width of the header: "========= TriHunt Commands ========="
+        private const val HEADER_WIDTH = 37
+    }
+
     override fun execute(sender: CommandSender, args: Array<out String>): Boolean {
         val categorized = CommandRegistrar.getCommandsByCategory()
 
@@ -50,7 +55,7 @@ class HelpCommand : PluginCommand(
         }
 
         // Footer
-        sender.sendMessage(Component.text("=".repeat(37), NamedTextColor.GOLD))
+        sender.sendMessage(Component.text("=".repeat(HEADER_WIDTH), NamedTextColor.GOLD))
 
         return true
     }
