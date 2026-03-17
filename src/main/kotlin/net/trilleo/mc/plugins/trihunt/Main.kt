@@ -6,8 +6,12 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class Main : JavaPlugin() {
     override fun onEnable() {
+        // Register commands and listeners
+        logger.info("Registering commands...")
         CommandRegistrar.registerAll(this)
+        logger.info("Registering listeners...")
         ListenerRegistrar.registerAll(this)
+
         logger.info("Plugin enabled!")
     }
 
