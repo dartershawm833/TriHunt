@@ -48,7 +48,14 @@ object ListenerRegistrar {
         return try {
             clazz.getDeclaredConstructor(JavaPlugin::class.java).newInstance(plugin)
         } catch (_: NoSuchMethodException) {
-            clazz.getDeclaredConstructor().newInstance()
+            try {
+                clazz.getDeclaredConstructor().newInstance()
+            } catch (_: NoSuchMethodException) {
+                throw IllegalArgumentException(
+                    "${clazz.simpleName} must declare either a no-arg constructor " +
+                        "or a constructor accepting a single JavaPlugin parameter"
+                )
+            }
         }
     }
 }

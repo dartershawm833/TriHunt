@@ -101,8 +101,14 @@ object PackageScanner {
                 @Suppress("UNCHECKED_CAST")
                 clazz as Class<out T>
             } else null
+        } catch (e: ClassNotFoundException) {
+            plugin.logger.warning("Class not found: $className (missing dependency?)")
+            null
+        } catch (e: NoClassDefFoundError) {
+            plugin.logger.warning("Class definition error for $className (incompatible class format?)")
+            null
         } catch (e: Exception) {
-            plugin.logger.warning("Failed to load class: $className – ${e.message}")
+            plugin.logger.warning("Failed to load class $className: [${e.javaClass.simpleName}] ${e.message}")
             null
         }
     }
